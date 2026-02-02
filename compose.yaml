@@ -1,0 +1,44 @@
+version: "3"
+services:
+  www:
+    build: .
+    container_name: laravel_app
+    volumes:
+      - ./intranet_shop:/var/www/html
+    ports:
+      - 8000:80
+    depends_on:
+      - db
+    environment:
+      APP_ENV: local
+      APP_DEBUG: "true"         
+      DB_CONNECTION: mariadb
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_DATABASE: intranet
+      DB_USERNAME: root
+      DB_PASSWORD: 12344321
+
+  db:
+    image: mariadb:10.11
+    container_name: laravel_db
+    restart: always
+    environment:
+      MYSQL_DATABASE: intranet
+      MYSQL_ROOT_PASSWORD: 12344321
+    volumes:
+      - ../db_data:/var/lib/mysql
+    ports:
+      - 3306:3306
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: laravel_pma
+    restart: always
+    ports:
+      - 8080:80
+    environment:
+      PMA_ARBITRARY: 1        
+      PMA_HOST: db
+    depends_on:
+      - db
