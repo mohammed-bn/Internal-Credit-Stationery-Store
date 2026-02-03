@@ -14,16 +14,26 @@ class User extends Model
     
     public function Manager()
     {
-        return $this->hasMany(Manager::class);
+        return $this->hasOne(Manager::class);
     }
 
     public function Employee()
     {
-        return $this->hasMany(Employee::class);
+        return $this->hasOne(Employee::class);
     }
 
     public function Admin()
     {
-        return $this->hasMany(Admin::class);
+        return $this->hasOne(Admin::class);
+    }
+
+    public function Departement()
+    {
+        return $this->belongsTo(Departement::class);
+    }
+
+    public function Role()
+    {
+        return $this->hasOne(Role::class);
     }
 }

@@ -8,8 +8,15 @@ class Employee extends Model
 {
     //
 
-    protected $fillable = ['tokens','total'];
-    public function User(){
+    protected $fillable = ['tokens', 'total'];
+    
+    public function User()
+    {
         return $this->belongsTo(User::class);
+    }
+
+    public function Orders()
+    {
+        return $this->hasMany(Order::class);
     }
 }
