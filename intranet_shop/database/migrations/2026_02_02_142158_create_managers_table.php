@@ -15,6 +15,7 @@ return new class extends Migration
             $table->integer('tokens');
             $table->integer('total');
             $table->foreignId('user_id')->constrained();
+            $table->timestamps();
         });
     }
 
