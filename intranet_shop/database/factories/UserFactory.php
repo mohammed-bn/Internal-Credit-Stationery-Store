@@ -2,9 +2,11 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
+use App\Models\Role;
+use App\Models\Departement;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
-
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
@@ -23,7 +25,8 @@ class UserFactory extends Factory
             'name'=>fake()->name(),
             'email'=>fake()->email(),
             'password'=>Hash::make('password'),
-            'role_id'=>2,
+            'role_id'=> rand(2,3),
+            'departement_id'=>rand(2,6),
         ];
     }
 }
