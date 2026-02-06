@@ -35,8 +35,8 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', Rules\Password::defaults()],
-            'role_id' => ['required','',''],
-            'departement_id' => ['required','',''],
+            'role_id' => ['required', '', ''],
+            'departement_id' => ['required', '', ''],
         ]);
 
         $user = User::create([
@@ -51,6 +51,13 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect(route('dashboard', absolute: false));
+        $user = Auth::user();
+        if ($user->role_id == 2) {
+            # code...
+            return redirect(route('manager.dashboard', absolute: false));
+        } else {
+            return redirect(route('employee.dashboard', absolute: false));
+            # code...
+        }
     }
 }

@@ -1,11 +1,18 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Models\Employee;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/employee/dashboard', function () {
+    return view('employee.dashboard');
+})->name("employee.dashboard");
+Route::get('/manager/dashboard', function () {
+    return view('manager.dashboard');
+})->name("manager.dashboard");
 
 Route::get('/dashboard', function () {
     return view('dashboard');
