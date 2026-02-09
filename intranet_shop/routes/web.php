@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/admin/listProduct', [ProductController::class, 'index']);
+Route::get('/admin/adminDashboard', [ProductController::class, 'create']);
 Route::get('/create', [ProductController::class, 'create']);
 Route::put('/products/{product}', [ProductController::class, 'update'])
     ->name('products.update');
