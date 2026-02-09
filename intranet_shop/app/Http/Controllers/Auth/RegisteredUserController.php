@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Departement;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -19,7 +20,8 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
-        return view('auth.register');
+        $departements = Departement::all();
+        return view('auth.register', compact('departements'));
     }
 
     /**
@@ -31,20 +33,31 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
+            'password' => ['required', Rules\Password::defaults()],
+            'role_id' => ['required', '', ''],
+            'departement_id' => ['required', '', ''],
         ]);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'role_id' => $request->role_id,
+            'departement_id' => $request->departement_id
         ]);
 
         event(new Registered($user));
 
         Auth::login($user);
 
-        return redirect(route('dashboard', absolute: false));
+        $user = Auth::user();
+        if ($user->role_id == 2) {
+            # code...
+            return redirect(route('manager.dashboard', absolute: false));
+        } else {
+            return redirect(route('employee.dashboard', absolute: false));
+            # code...
+        }
     }
 }
