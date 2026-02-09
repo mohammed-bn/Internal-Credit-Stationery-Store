@@ -1,11 +1,19 @@
 <?php
 
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/admin/listProduct', [ProductController::class, 'index']);
+Route::get('/create', [ProductController::class, 'create']);
+Route::put('/products/{product}', [ProductController::class, 'update'])
+    ->name('products.update');
+Route::delete('/products/{product}', [ProductController::class, 'destroy'])
+    ->name('products.destroy');
+
+
+// Route::get('/store',[ProductController::class,'index'])->name('products.store');
+// Route::get('/index',[ProductController::class,'index'])->name('products.index');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -17,4 +25,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
