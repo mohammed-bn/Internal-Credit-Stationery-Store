@@ -56,7 +56,7 @@ class RegisteredUserController extends Controller
             # code...
             return redirect(route('manager.dashboard', absolute: false));
         } else {
-            return redirect(route('employee.dashboard', absolute: false));
+            return redirect(route('employee.employeeDashboard', absolute: false));
             # code...
         }
     }

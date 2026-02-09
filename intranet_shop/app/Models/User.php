@@ -22,6 +22,10 @@ class User extends AuthUser
     {
         return $this->hasOne(Employee::class);
     }
+    public function Orders()
+    {
+        return $this->hasMany(Order::class);
+    }
 
     public function Admin()
     {

@@ -13,6 +13,6 @@ class Product extends Model
     protected $fillable = ['name','price','is_premium'];
 
     public function Orders(){
-        return $this->belongsTo(Order::class);
+        return $this->hasMany(Order::class);
     }
 }

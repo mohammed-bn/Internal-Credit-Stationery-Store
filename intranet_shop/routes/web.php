@@ -1,15 +1,14 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RedirectToViewsController;
 use App\Models\Employee;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/employee/dashboard', function () {
-    return view('employee.dashboard');
-})->name("employee.dashboard");
+Route::get('/employee/employeeDashboard', [RedirectToViewsController::class, "employee"])->name("employee.employeeDashboard");
 Route::get('/manager/dashboard', function () {
     return view('manager.dashboard');
 })->name("manager.dashboard");
@@ -24,4 +23,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
