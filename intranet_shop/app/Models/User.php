@@ -4,13 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as AuthUser;
 
-class User extends Model
+class User extends AuthUser
 {
     //
     use HasFactory;
 
-    protected $fillable = ['name','email','password'];
+    protected $fillable = ['name','email','password','role_id','departement_id'];
     
     public function Manager()
     {
@@ -20,6 +21,10 @@ class User extends Model
     public function Employee()
     {
         return $this->hasOne(Employee::class);
+    }
+    public function Orders()
+    {
+        return $this->hasMany(Order::class);
     }
 
     public function Admin()
