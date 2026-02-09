@@ -14,7 +14,7 @@ class ProductController extends Controller
     {
         //pour afficher tous les produits
         $products = Product::all();
-        return view('ProductView.index',compact('products'));
+        return view('ProductView.index', compact('products'));
     }
 
     /**
@@ -68,17 +68,18 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Product $product)
     {
         $validated = $request->validate([
-            'nom' => 'required|string|max:45',
+            'name' => 'required|string|max:45',
             'description' => 'required|string',
-            'prix' => 'required|numeric|min:0',
+            'price' => 'required|numeric|min:0',
             'type' => 'required|string|max:100',
-            'produit' => 'required|boolean',
+            'is_premium' => 'required|boolean',
         ]);
 
-        $product = Product::findOrFail($id);
+
+        $product = Product::findOrFail($product->id);
         $product->update($validated);
 
         return redirect()->route('products.index')
@@ -93,6 +94,6 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
         $product->delete();
         return redirect()->route('products.index')
-        ->with('success', 'Produit supprimé avec succès');
+            ->with('success', 'Produit supprimé avec succès');
     }
 }
