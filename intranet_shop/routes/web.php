@@ -1,10 +1,20 @@
 <?php
 
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RedirectToViewsController;
+use App\Http\Controllers\StoreController;
 use App\Models\Employee;
 use Illuminate\Support\Facades\Route;
 
+Route::get('/', function () {
+    return view('welcome');
+});
+Route::get('/store', [StoreController::class,'list'])->name('store.list');
+Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
+
+Route::get('/employee/employeeDashboard', [RedirectToViewsController::class, "employee"])->name("employee.employeeDashboard");
 Route::get('/admin/listProduct', [ProductController::class, 'index']);
 Route::get('/admin/adminDashboard', [ProductController::class, 'create']);
 Route::get('/create', [ProductController::class, 'create']);
