@@ -15,6 +15,7 @@ Route::get('/store', [StoreController::class,'list'])->name('store.list');
 Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
 
 Route::get('/employee/employeeDashboard', [RedirectToViewsController::class, "employee"])->name("employee.employeeDashboard");
+Route::get('/manager/managerDashboard', [RedirectToViewsController::class, "manager"])->name("manager.managerDashboard");
 Route::get('/admin/listProduct', [ProductController::class, 'index']);
 Route::get('/admin/adminDashboard', [ProductController::class, 'create']);
 Route::get('/create', [ProductController::class, 'create']);
@@ -26,12 +27,12 @@ Route::delete('/products/{product}', [ProductController::class, 'destroy'])
 
 // Route::get('/store',[ProductController::class,'index'])->name('products.store');
 // Route::get('/index',[ProductController::class,'index'])->name('products.index');
-Route::get('/employee/dashboard', function () {
-    return view('employee.dashboard');
-})->name("employee.dashboard");
-Route::get('/manager/dashboard', function () {
-    return view('manager.dashboard');
-})->name("manager.dashboard");
+// Route::get('/employee/dashboard', function () {
+//     return view('employee.dashboard');
+// })->name("employee.dashboard");
+// Route::get('/manager/dashboard', function () {
+//     return view('manager.dashboard');
+// })->name("manager.dashboard");
 
 Route::get('/dashboard', function () {
     return view('dashboard');
