@@ -30,7 +30,7 @@ class AuthenticatedSessionController extends Controller
         $user = Auth::user();
         if ($user->role_id == 2) {
             # code...
-            return redirect(route('manager.dashboard', absolute: false));
+            return redirect(route('manager.managerDashboard', absolute: false));
         } else {
             return redirect(route('employee.employeeDashboard', absolute: false));
             # code...

@@ -15,4 +15,9 @@ public function employee()
     $orders = auth()->user()->orders()->with('product')->get();
     return view('employee.employeeDashboard', compact('orders'));
 }
+public function manager()
+{
+    $orders = auth()->user()->orders()->with('product')->get();
+    return view('manager.managerDashboard', compact('orders'));
+}
 }
