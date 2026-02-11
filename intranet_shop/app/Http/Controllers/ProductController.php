@@ -30,22 +30,19 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-
-
         $validated = $request->validate([
-            'nom' => 'required|string|max:45',
-            'description' => 'required|string|max:255',
-            'prix' => 'required|numeric|min:0',
-            'type' => 'required|string|max:100',
-            'produit' => 'required|boolean',
+            'name' => 'required|string|max:255',
+            'price' => 'required|numeric|min:0',
+            'is_premium' => 'required|boolean',
         ]);
 
-        Product::create($validated);
+        $product = Product::create($validated);
 
-        return redirect()->route('products.index')
-            ->with('success', 'Produit ajouté avec succès');
-
+        return redirect()->route('products.index')->with('success', 'produit créer avec succes');
     }
+
+
+
 
     /**
      * Display the specified resource.
@@ -72,19 +69,15 @@ class ProductController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:45',
-            'description' => 'required|string',
             'price' => 'required|numeric|min:0',
-            'type' => 'required|string|max:100',
             'is_premium' => 'required|boolean',
         ]);
 
-
-        $product = Product::findOrFail($product->id);
         $product->update($validated);
 
-        return redirect()->route('products.index')
-            ->with('success', 'Produit modifié avec succès');
+        return redirect()->route('products.index')->with('success', 'produit modifier avec succes');
     }
+
 
     /**
      * Remove the specified resource from storage.
