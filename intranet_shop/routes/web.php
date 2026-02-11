@@ -19,20 +19,14 @@ Route::get('/manager/managerDashboard', [RedirectToViewsController::class, "mana
 Route::get('/admin/listProduct', [ProductController::class, 'index']);
 Route::get('/admin/adminDashboard', [ProductController::class, 'create']);
 Route::get('/create', [ProductController::class, 'create']);
-Route::put('/products/{product}', [ProductController::class, 'update'])
-    ->name('products.update');
-Route::delete('/products/{product}', [ProductController::class, 'destroy'])
-    ->name('products.destroy');
 
 
-// Route::get('/store',[ProductController::class,'index'])->name('products.store');
-// Route::get('/index',[ProductController::class,'index'])->name('products.index');
-// Route::get('/employee/dashboard', function () {
-//     return view('employee.dashboard');
-// })->name("employee.dashboard");
-// Route::get('/manager/dashboard', function () {
-//     return view('manager.dashboard');
-// })->name("manager.dashboard");
+Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
+Route::post('/products', [ProductController::class, 'store'])->name('products.store');
+Route::put('/products/{product}', [ProductController::class, 'update'])->name('products.update');
+Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
