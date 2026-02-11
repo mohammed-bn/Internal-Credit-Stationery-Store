@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/store', [StoreController::class,'list'])->name('store.list');
+Route::get('/store', [StoreController::class, 'list'])->name('store.list');
 Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
 
 Route::get('/employee/employeeDashboard', [RedirectToViewsController::class, "employee"])->name("employee.employeeDashboard");
@@ -34,9 +34,24 @@ Route::get('/manager/dashboard', function () {
 })->name("manager.dashboard");
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+    $user = auth()->user();
 
+    // Check role and redirect to the specific named route
+    switch ($user->role_id) {
+        case 3:
+            return redirect()->route('employee.employeeDashboard');
+
+        case 2:
+            return redirect()->route('manager.managerDashboard');
+
+        case 1:
+            return redirect()->route('admin.adminDashboard');
+
+        default:
+            // Fallback for users without a specific role
+            return view('welcome');
+    }
+})->middleware(['auth', 'verified'])->name('dashboard');
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

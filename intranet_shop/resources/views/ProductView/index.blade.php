@@ -1,43 +1,80 @@
-@foreach ($products as $product)
-    <div style="border:1px solid #ca1212; padding:10px; margin-bottom:10px;">
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            {{ __('Manage Products') }}
+        </h2>
+    </x-slot>
 
-        {{-- UPDATE FORM --}}
-        <form action="{{ route('products.update', $product->id) }}" method="POST">
-            @csrf
-            @method('PUT')
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            
+            {{-- Grid Container --}}
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                @foreach ($products as $product)
+                    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden flex flex-col">
+                        
+                        {{-- UPDATE FORM --}}
+                        <form action="{{ route('products.update', $product->id) }}" method="POST" class="p-6 flex-grow">
+                            @csrf
+                            @method('PUT')
 
-            <h4>
-                <input name="name" value="{{ $product->name }}">
-            </h4>
+                            {{-- 1. Name Input --}}
+                            <div class="mb-4">
+                                <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Product Name</label>
+                                <input type="text" name="name" value="{{ $product->name }}" 
+                                    class="w-full rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:ring-indigo-500 focus:border-indigo-500 font-bold text-lg">
+                            </div>
 
-            <p>
-                Price:
-                <input type="number" name="price" value="{{ $product->price }}">
-            </p>
+                            <div class="grid grid-cols-2 gap-4 mb-6">
+                                {{-- 2. Price Input --}}
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Price ($)</label>
+                                    <input type="number" name="price" value="{{ $product->price }}" step="0.01"
+                                        class="w-full rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:ring-indigo-500 focus:border-indigo-500">
+                                </div>
 
-            <p>
-                Premium:
-                <select name="is_premium">
-                    <option value="0" {{ !$product->is_premium ? 'selected' : '' }}>No</option>
-                    <option value="1" {{ $product->is_premium ? 'selected' : '' }}>Yes</option>
-                </select>
-            </p>
+                                {{-- 3. Premium Select --}}
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Type</label>
+                                    <select name="is_premium" 
+                                        class="w-full rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:ring-indigo-500 focus:border-indigo-500">
+                                        <option value="0" {{ !$product->is_premium ? 'selected' : '' }}>Standard</option>
+                                        <option value="1" {{ $product->is_premium ? 'selected' : '' }}>Premium</option>
+                                    </select>
+                                </div>
+                            </div>
 
-            <button type="submit">Update</button>
-        </form>
+                            {{-- Update Button --}}
+                            <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200">
+                                Update Product
+                            </button>
+                        </form>
 
-        {{-- DELETE FORM --}}
-        <form action="{{ route('products.destroy', $product->id) }}" method="POST"
-              onsubmit="return confirm('Are you sure you want to delete this product?');"
-              style="margin-top:5px;">
-            @csrf
-            @method('DELETE')
+                        {{-- CARD FOOTER: Date & Delete --}}
+                        <div class="bg-gray-50 dark:bg-gray-700/30 px-6 py-4 border-t border-gray-100 dark:border-gray-700 flex justify-between items-center">
+                            
+                            {{-- Created At --}}
+                            <span class="text-xs text-gray-400">
+                                {{ $product->created_at->format('M d, Y') }}
+                            </span>
 
-            <button type="submit" style="color:red;">
-                Delete
-            </button>
-        </form>
+                            {{-- DELETE FORM --}}
+                            <form action="{{ route('products.destroy', $product->id) }}" method="POST"
+                                onsubmit="return confirm('Are you sure you want to delete this product?');">
+                                @csrf
+                                @method('DELETE')
 
-        <p>Created at: {{ $product->created_at }}</p>
+                                <button type="submit" class="text-sm font-semibold text-red-600 hover:text-red-800 dark:hover:text-red-400 transition-colors">
+                                    Delete
+                                </button>
+                            </form>
+                        </div>
+
+                    </div>
+                @endforeach
+
+            </div>
+        </div>
     </div>
-@endforeach
+</x-app-layout>
