@@ -12,7 +12,7 @@ class Product extends Model
 
     protected $fillable = ['name','price','is_premium'];
 
-    public function Orders(){
+    public function orders(){
         return $this->hasMany(Order::class);
     }
 }
