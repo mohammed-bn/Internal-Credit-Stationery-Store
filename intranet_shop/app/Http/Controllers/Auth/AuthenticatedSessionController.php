@@ -28,13 +28,15 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
         $user = Auth::user();
-        if ($user->role_id == 2) {
-            # code...
-            return redirect(route('manager.dashboard', absolute: false));
-        } else {
-            return redirect(route('employee.employeeDashboard', absolute: false));
-            # code...
-        }
+
+        $targetRoute = match ($user->role_id) {
+            3 => 'employee.employeeDashboard',
+            2 => 'manager.managerDashboard',
+            1 => 'admin.adminDashboard',
+            default => 'dashboard',
+        };
+
+        return redirect()->route($targetRoute);
     }
 
     /**
